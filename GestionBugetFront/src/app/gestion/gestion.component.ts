@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GestionMockService } from './../mock/gestion.mock.service';
 import { Depense } from './../shared/depense';
-
 
 @Component
 ({
@@ -13,8 +13,14 @@ import { Depense } from './../shared/depense';
 export class GestionComponent implements OnInit{
 
 depenses ?: Depense[];
-  constructor(private depensesService : GestionMockService ){
+gestionForm : FormGroup;
+  constructor(private depensesService : GestionMockService,private fb:FormBuilder ){
+    this.gestionForm = this.fb.group({
+      nom:['',Validators.required],
+      valeur:['',Validators.required],
+      commentaire:''
 
+    });
   }
 
   ngOnInit(){

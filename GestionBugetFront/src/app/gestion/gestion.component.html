@@ -1,9 +1,56 @@
-<h3>Hello from gestion</h3>
-<ul>
-  <li *ngFor="let depense of depenses">
-    Nom:{{depense.nom}},valeur:{{depense.valeur}},commentaire:{{depense.commentaire}}
+<h3>Gestion</h3>
+<div class="container">
 
 
-  </li>
+  <div class="row">
+    <div class="col-lg-7">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>valeur</th>
+            <th>commentaires</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let depense of depenses">
+          <td>{{depense.nom}}</td>
+          <td>{{depense.valeur}}</td>
+          <td>{{depense.commentaire}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-5">
+      <div class="card">
+        <div class="card-header bg-info text-white">
+          Ajouter depenses
+        </div>
+        <div class="card-body">
+          <form [formGroup]="gestionForm">
+            <div class="form-group">
+              <label>Nom</label>
+              <input type="text" class="form-control" formControlName="nom"/>
+            </div>
+            <div class="alert alert-danger" *ngIf="gestionForm.controls['nom'].invalid && (gestionForm.controls['nom'].touched || gestionForm.controls['nom'].dirty)">
+              Nom Obligatoire
+            </div>
+            <div class="form-group">
+              <label>Valeur</label>
+              <input type="number" class="form-control" formControlName="valeur"/>
+            </div>
+            <div class="form-group">
+              <label>Commentaire</label>
+              <input type="text" class="form-control" formControlName="commentaire"/>
+            </div>
+            <button class="btn btn-success" [disabled]="gestionForm.pristine || gestionForm.invalid ">Valider</button>
+          </form>
+        </div>
+        <div class="card-footer">
+          footer
+        </div>
+      </div>
+    </div>
+  </div>
 
-</ul>
+</div>
