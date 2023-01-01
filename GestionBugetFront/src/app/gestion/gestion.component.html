@@ -10,13 +10,15 @@
             <th>Nom</th>
             <th>valeur</th>
             <th>commentaires</th>
+            <th>Date</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let depense of depenses">
-          <td>{{depense.nom}}</td>
-          <td>{{depense.valeur}}</td>
-          <td>{{depense.commentaire}}</td>
+          <td>{{depense.nom_dpns}}</td>
+          <td>{{depense.valeur_dpns}}</td>
+          <td>{{depense.categorie_dpns}}</td>
+          <td>{{depense.date_dpns}}</td>
           </tr>
         </tbody>
       </table>

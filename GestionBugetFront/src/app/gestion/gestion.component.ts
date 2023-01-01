@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GestionMockService } from './../mock/gestion.mock.service';
-import { Depense } from './../shared/depense';
+import { DepenseService } from "../service/depense/depense.service";
+import { Depense } from "../shared/models/depense.model";
+
+
 
 @Component
 ({
@@ -12,9 +14,11 @@ import { Depense } from './../shared/depense';
 
 export class GestionComponent implements OnInit{
 
-depenses ?: Depense[];
+public depenses : Depense[] = [];
+
+
 gestionForm : FormGroup;
-  constructor(private depensesService : GestionMockService,private fb:FormBuilder ){
+  constructor(private depensesService : DepenseService,private fb:FormBuilder ){
     this.gestionForm = this.fb.group({
       nom:['',Validators.required],
       valeur:['',Validators.required],
@@ -24,7 +28,17 @@ gestionForm : FormGroup;
   }
 
   ngOnInit(){
-    this.depenses = this.depensesService.getDepenses();
-    console.log( this.depenses)
+    this.loadProduits();
+  }
+
+  loadProduits(){
+    this.depensesService.getDepenses().subscribe(
+      data => {
+       this.depenses=data;},
+      error => { console.log('An error was occured.')},
+      () => { console.log('loading produits was done.')}
+    );
   }
 }
+
+
