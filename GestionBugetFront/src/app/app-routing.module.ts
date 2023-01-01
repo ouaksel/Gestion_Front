@@ -1,12 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { GestionComponent } from './gestion/gestion.component';
 
-const routes: Routes = [];
+export const appRoutes: Routes = [
+  {path: 'gestion', component: GestionComponent},
+  {path: 'dashboard', component: DashboardComponent},
+  {path: '', redirectTo: '/dashboard', pathMatch: 'full'}
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(
+
+      appRoutes,
+      {enableTracing: true}
+    )
+  ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {
-  showhideBar : boolean = false;
+export class AppRoutingModule{
+
 }
