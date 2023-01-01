@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'GestionBugetFront';
+  showHideSideBar: boolean = false;
+
+  onShowSideBarChange(showHideSideBar : boolean){
+    this.showHideSideBar = showHideSideBar;
+  }
 }
