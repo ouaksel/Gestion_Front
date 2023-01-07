@@ -1,52 +1,75 @@
-<h3>Gestion</h3>
+
 <div class="container">
 
-
+  <h3>Depenses</h3>
   <div class="row">
-    <div class="col-lg-7">
+    <div class="col-lg-8">
       <table class="table table-hover">
         <thead>
           <tr>
             <th>Nom</th>
             <th>valeur</th>
             <th>commentaires</th>
-            <th>Date</th>
+
+            <th>
+              <button class="btn btn-outline-primary" (click)="operation = 'add'; initDepense()">ADD</button>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let depense of depenses">
-          <td>{{depense.nom_dpns}}</td>
+          <td>{{depense.nom_dpns}}  {{depense.id_dpns}}</td>
           <td>{{depense.valeur_dpns}}</td>
           <td>{{depense.categorie_dpns}}</td>
-          <td>{{depense.date_dpns}}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" (click)="operation = 'edit'; selectedDepense = depense;">Edit</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="operation = 'remove'; selectedDepense = depense;">Remove</button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="col-lg-5">
+    <div class="col-lg-4">
       <div class="card">
         <div class="card-header bg-info text-white">
-          Ajouter depenses
+          {{operation == 'add' ? 'Ajouter Produit' :
+          operation == 'edit' ? 'Modifier Produit' :
+          operation == 'remove' ? 'Supprimer Produit' : ''}}
+
         </div>
         <div class="card-body">
-          <form [formGroup]="gestionForm">
+          <div *ngIf="operation == 'add' || operation == 'edit'">
+          <form [formGroup]="gestionForm" >
             <div class="form-group">
               <label>Nom</label>
-              <input type="text" class="form-control" formControlName="nom"/>
+              <input type="text" class="form-control" formControlName="nom" [(ngModel)]="selectedDepense.nom_dpns"/>
             </div>
             <div class="alert alert-danger" *ngIf="gestionForm.controls['nom'].invalid && (gestionForm.controls['nom'].touched || gestionForm.controls['nom'].dirty)">
               Nom Obligatoire
             </div>
             <div class="form-group">
               <label>Valeur</label>
-              <input type="number" class="form-control" formControlName="valeur"/>
+              <input type="number" class="form-control" formControlName="valeur" [(ngModel)]="selectedDepense.valeur_dpns"/>
             </div>
             <div class="form-group">
               <label>Commentaire</label>
-              <input type="text" class="form-control" formControlName="commentaire"/>
+              <input type="text" class="form-control" formControlName="commentaire"  [(ngModel)]="selectedDepense.commentaire_dpns"/>
             </div>
-            <button class="btn btn-success" [disabled]="gestionForm.pristine || gestionForm.invalid ">Valider</button>
+            <button class="btn btn-success" [disabled]="gestionForm.pristine || gestionForm.invalid " (click)="operation == 'add' ? addDepense() : updateDepense()">
+              {{ operation == 'add' ? 'Ajouter' : operation == 'edit' ? 'Modifier' : ''}}
+            </button>
           </form>
+          </div>
+          <div *ngIf="operation == 'remove'">
+            <p class="card-title">
+              Référence: {{selectedDepense.nom_dpns}}
+            </p>
+            <p>
+              Voulez-vous supprimer cet élément?
+            </p>
+            <button class="btn btn-success"  (click)="deleteDepense()" >Confirmer</button>
+          </div>
+        </div>
         </div>
         <div class="card-footer">
           footer
@@ -55,4 +78,4 @@
     </div>
   </div>
 
-</div>
+
